@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%= csrf_meta_tags %>
+
+    <%= wicked_pdf_stylesheet_link_tag 'application' %>
+   
+    <!-- This is not working in production compiled assets. -->
+    <!-- <%= wicked_pdf_javascript_include_tag 'pdf' %> -->
+    <%= javascript_include_tag wicked_pdf_asset_base64('pdf') %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>

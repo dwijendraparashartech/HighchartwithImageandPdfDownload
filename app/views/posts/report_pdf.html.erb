@@ -1,0 +1,29 @@
+<%#= javascript_include_tag "https://www.google.com/jsapi" %>
+<%#= wicked_pdf_javascript_include_tag "chartkick" %>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+  google.charts.load('current', {packages: ['corechart']});
+  google.charts.setOnLoadCallback(drawChart);
+  ...
+</script>
+<%= wicked_pdf_javascript_include_tag "application", "chartkick" %>
+<%= pie_chart Post.group(:title).count %>
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Body</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @report_pdf.each do |post| %>
+      <tr>
+        <td><%= post.title %></td>
+        <td><%= post.body %></td>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

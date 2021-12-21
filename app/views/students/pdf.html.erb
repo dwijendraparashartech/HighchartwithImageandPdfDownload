@@ -1,0 +1,110 @@
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<%= wicked_pdf_javascript_include_tag 'jquery-1.6.2.min', 'dr_statistics/highcharts' %>
+<script>
+
+  $(function () {
+     $('#container').highcharts({
+      chart: {
+        type: 'column'
+      },
+      first_name: {
+        text: 'Monthly Average Rainfall'
+      },
+      last_name: {
+        text: 'Source: WorldClimate.com'
+      },
+      xAxis: {
+        students: [
+          'first_name',
+          'last_name'
+          
+        ]
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'No of Students'
+        }
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+          '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+      },
+      plotOptions: {
+        column: {
+          pointPadding: 0.2,
+          borderWidth: 0,
+          enableMouseTracking: false,
+          shadow: false,
+          animation: false }
+      },
+      series:[
+        <%@students.each do |op|%>
+        {
+            first_name:'<%= op.first_name%>',
+            data:[<%= Student.count%>]
+        },
+        <% end %>
+      ]
+    });
+  });
+</script>
+<div id="container"></div>
+<canvas id="sample"></canvas>
+<script type="text/javascript">
+  <%#= render "students/partials/main.js"%>
+</script>
+<%#= link_to "PDF", convert_path(format: :pdf), class: "btn btn-sm btn-default", target: "_blank" %>
+  <h1>Students</h1>
+ 
+  <table>
+    <thead>
+        <tr>
+          <th>First name</th>
+          <th>Last name</th>
+        </tr>
+      </thead>
+      <tbody>
+    <% @students.each do |student| %>
+      <tr>
+        <td><%= student.first_name %></td>
+        <td><%= student.last_name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+  </table>
+ 
+  <!-- <div class="notes">
+    <p><strong>Notes:</strong> This invoice was paid on the 23rd of March 2016 using your credit card ending on 1234.</p>
+  </div> -->
+<style>
+    * {
+      color: grey;
+    }
+    h1 {
+      text-align: center;
+      color: black;
+      margin-bottom: 100px;
+    }
+    .notes {
+      margin-top: 100px;
+    }
+ 
+    table {
+      width: 100%;
+    }
+    th {
+      text-align: left;
+      color: black;
+      padding-bottom: 15px;
+    }
+  </style>
+ 
